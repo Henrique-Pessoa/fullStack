@@ -40,7 +40,7 @@ class LoginView(APIView):
         password = request.data.get('password')
         print(username, password)
         try:
-            user = CustomUser.objects.get(username=username)
+            user = CustomUser.objects.get(password=password)
         except CustomUser.DoesNotExist:
             user = None
         if user is not None:
