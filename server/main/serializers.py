@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import CustomUser, Comentarios, Equipamentos
+from .models import CustomUser, Comentarios, Equipamentos,EquipamentosComentarios
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
@@ -36,4 +36,9 @@ class ComentariosSerializer(serializers.ModelSerializer):
 class EquipamentosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Equipamentos 
+        fields = "__all__"
+
+class EquipamentosComentariosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EquipamentosComentarios
         fields = "__all__"

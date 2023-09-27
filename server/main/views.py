@@ -62,3 +62,8 @@ class ComentariosViewSet(viewsets.ModelViewSet):
     queryset = Comentarios.objects.all()
     serializer_class = ComentariosSerializer
     permission_classes = (IsAuthenticated,)
+
+class EquipamentoComentariosViewSet(viewsets.ModelViewSet):
+    queryset = EquipamentosComentarios.objects.all()
+    serializer_class = EquipamentosComentariosSerializer
+    permission_classes = (IsAuthenticated,)

@@ -1,13 +1,14 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
 from django.urls import path
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from .views import *
+from rest_framework.routers import DefaultRouter 
+
+router = DefaultRouter()
+router.register(r'equipamentos', EquipamentosViewSet)
+router.register(r'comentarios', ComentariosViewSet)
+router.register(r'equipamentosComentarios',EquipamentoComentariosViewSet)
 
 
-urlpatterns = [
-    path('register/', CustomUserCreateView.as_view(), name='user-create'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('login/', LoginView.as_view(), name='token_obtain_pair')
-]
+urlpatterns = router.urls
 
