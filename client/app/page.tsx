@@ -6,12 +6,14 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import ModalRegister from './components/ModalRegister';
 import { useRouter } from 'next/navigation';
 import LoginIcon from '@mui/icons-material/Login';
+import Loader from './components/Loader';
 
 export default function Home() {
   const [password, setPassword] = useState<string>('');
   const [show, setShow] = useState<boolean>(false);
   const [register, setRegister] = useState<boolean>(false);
   const [erro, setErro] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const inputNUm = (e: any) => {
@@ -21,6 +23,7 @@ export default function Home() {
     setPassword('');
   };
   const handleLogin = async () => {
+    setLoading(true);
     try {
       const response = await fetch('http://127.0.0.1:8000/login/', {
         method: 'POST',
@@ -40,6 +43,8 @@ export default function Home() {
       }
     } catch (error) {
       setErro('Invalid credentials. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -148,7 +153,7 @@ export default function Home() {
             onClick={handleLogin}
             className=' border-bgColor rounded-full w-20 h-20  border-solid text-title border-2 font-sans text-3xl hover:bg-bgTitle hover:scale-110 transition-transform duration-500 ease-in-out '
           >
-            <LoginIcon style={{ fontSize: 40 }}></LoginIcon>
+            <LoginIcon style={{ fontSize: 40 }} />
           </button>
         </div>
         <h1 className='text-red-900 mt-5'>{erro}</h1>
@@ -160,6 +165,13 @@ export default function Home() {
         </button>
       </div>
       {register && <ModalRegister onClose={() => setRegister(false)} />}
+      {loading ? (
+        <div className='absolute w-full h-full justify-center m-auto flex top-0 bg-transparent backdrop-blur-sm'>
+          <Loader />
+        </div>
+      ) : (
+        <></>
+      )}
     </main>
   );
 }
