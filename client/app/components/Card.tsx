@@ -54,14 +54,14 @@ const Card: React.FC = () => {
               <CommentIcon style={{ fontSize: 50 }} className='mr-4' />
               <DeleteIcon
                 className='cursor-pointer'
-                onClick={() => setHandleDelete(true)}
+                onClick={() => {setHandleDelete(true),window.scrollTo({top:0, behavior: 'smooth'})}}
                 style={{ fontSize: 50 }}
               />
             </div>
           </div>
         </div>
       ))}
-      {handleDelete && <DeleteMachine onClose={() => setHandleDelete(false)} />}
+      {handleDelete && <DeleteMachine onClose={() => setHandleDelete(false)}/>}
     </main>
   );
 };

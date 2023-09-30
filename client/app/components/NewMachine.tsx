@@ -1,17 +1,61 @@
-import React, { useState } from 'react';
+'use client';
+import React, { useState,useEffect } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import Checkbox from '@mui/material/Checkbox';
+import {useRouter} from 'next/navigation';
+import axios from 'axios';
 
 interface Props {
   onClose: () => void;
 }
 
+interface MachineI{
+  name: string,
+  image:string,
+  description:string,
+  activate: boolean
+}
+
 const NovoEquipamento = ({ onClose }: Props) => {
+  const [token, setToken] = useState<string | null>(null);
   const [isChecked, setIsChecked] = useState(false);
+  const [name,setName] = useState("");
+  const [description,setDescription] = useState("");
+  const [image,setImage] = useState("");
+  const [comment,setComment] = useState("");
+  const [erro,setErro] = useState("");
+  const router = useRouter();
+
+
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      setToken(accessToken);
+    }
+  }, []);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
+  const config = {
+    headers: { Authorization: `Bearer ${token}` }
+  };
+
+
+  const handleRegister = async () => {
+    console.log(token);
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/equipamentos/', {
+          nome: name,
+          image: image,
+          descricao: description,
+          ativo: isChecked,
+        },config)
+        router.refresh();
+      } catch (error) {
+        setErro("Can't register the machine");
+      }
+    };
   return (
     <main className='w-full h-screen bg-transparent absolute top-0 backdrop-blur-sm  z-20 justify-center flex'>
       <div className='w-[60rem]  h-[30rem] bg-white border-2 border-black m-auto'>
@@ -23,24 +67,27 @@ const NovoEquipamento = ({ onClose }: Props) => {
             onClick={onClose}
             style={{ fontSize: 40 }}
             className='mr-6 relative bottom-3 text-title cursor-pointer'
-          />
+            />
         </div>
         <div className='flex flex-col gap-8 relative mt-11 ml-5'>
           <input
             type='text'
             name=''
             placeholder='Name'
+            onChange={(e)=>setName(e.target.value)}
             className='border-b-2 border-black w-[55rem] outline-none'
           />
           <input
             type='text'
             name=''
             placeholder='Image address'
+            onChange={(e)=>setImage(e.target.value)}
             className='border-b-2 border-black w-[55rem] outline-none'
           />
           <textarea
             className=' border-b-2 border-black outline-none w-[55rem] box-border resize-none'
             placeholder='Description'
+            onChange={(e)=>setDescription(e.target.value)}
           ></textarea>
           <label className='flex items-center space-x-2 right-2 relative mt-3'>
             <input
@@ -70,7 +117,7 @@ const NovoEquipamento = ({ onClose }: Props) => {
             Ativo
           </label>
         </div>
-        <button className='w-40 h-14 rounded-2xl bg-title relative ml-2 mt-10 text-1xl font-bold text-white border-2 border-black'>
+        <button onClick={handleRegister} className='w-40 h-14 rounded-2xl bg-title relative ml-2 mt-10 text-1xl font-bold text-white border-2 border-black'>
           Register
         </button>
       </div>

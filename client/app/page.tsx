@@ -3,7 +3,7 @@ import { useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import ModalRegister from './components/ModalRegister';
+import ModalRegister from './components/modalRegister';
 import { useRouter } from 'next/navigation';
 import LoginIcon from '@mui/icons-material/Login';
 import Loader from './components/Loader';

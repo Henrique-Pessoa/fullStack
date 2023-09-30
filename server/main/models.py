@@ -53,7 +53,7 @@ class Equipamentos(models.Model):
     image = models.CharField(max_length=2000000,blank=False,null=False)
     descricao = models.CharField(max_length=2000,blank=False,null=False)
     ativo = models.BooleanField(default=False,null=False,blank=False)
-    comentarios = models.ManyToManyField(Comentarios, related_name="equipamentos")
+    comentarios = models.ManyToManyField(Comentarios, related_name="equipamentos",null=True, blank=False)
     
     def __str__(self):
         return self.nome

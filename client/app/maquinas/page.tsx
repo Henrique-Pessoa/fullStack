@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import NewMachine from '../components/NewMachine';
+import DeleteMachine from '../components/DeleteMachine';
 
 const Maquinas: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
